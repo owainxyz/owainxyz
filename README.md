@@ -32,6 +32,13 @@ Python/Nix builder. NixOS daily driver.
 
 ### featured projects
 
+#### [uncord](https://github.com/epwv/uncord)
+**Discord in your Terminal**
+
+Python TUI for Discord with voice and video calls, inline images and screen sharing.
+
+<br>
+
 #### [lian-li-linux-nix](https://github.com/epwv/lian-li-linux-nix)
 **Lian Li RGB/Fan Control for NixOS**
 
