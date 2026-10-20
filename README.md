@@ -6,11 +6,11 @@
 
 Python/Nix builder. NixOS daily driver.
 
-🌐 [github.com/epwv](https://github.com/epwv)
+🌐 [github.com/owainxyz](https://github.com/owainxyz)
 
 🌐 [huhfloppuh.com](https://huhfloppuh.com)
 
-🌐 [epwv.github.io](https://epwv.github.io/infopage/)
+🌐 [owainxyz.github.io](https://owainxyz.github.io/infopage/)
 
 
 ---
@@ -32,28 +32,21 @@ Python/Nix builder. NixOS daily driver.
 
 ### featured projects
 
-#### [uncord](https://github.com/epwv/uncord)
+#### [uncord](https://github.com/owainxyz/uncord)
 **Discord in your Terminal**
 
 Python TUI for Discord with voice and video calls, inline images and screen sharing.
 
 <br>
 
-#### [lian-li-linux-nix](https://github.com/epwv/lian-li-linux-nix)
+#### [lian-li-linux-nix](https://github.com/owainxyz/lian-li-linux-nix)
 **Lian Li RGB/Fan Control for NixOS**
 
 Nix packaging for Lian Li hardware control on Linux.
 
 <br>
 
-#### [gh-name-check](https://github.com/epwv/gh-name-check)
-**GitHub Username Availability Checker**
-
-Python tool for checking short/available GitHub usernames.
-
-<br>
-
-#### [fastfetch-config](https://github.com/epwv/fastfetch-config)
+#### [fastfetch-config](https://github.com/owainxyz/fastfetch-config)
 **Fastfetch Config**
 
 NixOS configuration and a custom fastfetch theme.
