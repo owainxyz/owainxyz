@@ -46,6 +46,13 @@ Nix packaging for Lian Li hardware control on Linux.
 
 <br>
 
+#### [waybar-config](https://github.com/owainxyz/waybar-config)
+**Waybar Config**
+
+Two small floating bars, plain dark grey. Works on hyprland, sway, niri, river and dwl.
+
+<br>
+
 #### [fastfetch-config](https://github.com/owainxyz/fastfetch-config)
 **Fastfetch Config**
 
