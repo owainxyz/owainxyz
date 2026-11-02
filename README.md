@@ -8,6 +8,8 @@ Python/Nix builder. NixOS daily driver.
 
 🌐 [github.com/owainxyz](https://github.com/owainxyz)
 
+🌐 [gentoo.lol](https://gentoo.lol)
+
 🌐 [huhfloppuh.com](https://huhfloppuh.com)
 
 🌐 [owainxyz.github.io](https://owainxyz.github.io/infopage/)
