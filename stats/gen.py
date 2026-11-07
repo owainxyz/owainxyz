@@ -203,7 +203,7 @@ body += f'<text x="20" y="{fy - 20}" font-size="12" class="m">what the flake bui
 body += node(20, fy + 62, 160, "flake.nix", "nix profile add", accent)
 body += node(250, fy + 20, 240, "lian-li-linux/", "buildRustPackage + rpath", langColors["Nix"])
 body += node(250, fy + 104, 240, "module.nix", "nixos module", langColors["Nix"])
-outs = [("lianli-daemon", "fans, rgb, lcd"), ("lianli-gui", "slint ui"), ("systemd --user", "daemon service"), ("udev rules", "store paths"), ("evdi", "lcd panels")]
+outs = [("lianli-daemon", "fans, rgb, lcd"), ("lianli-gui", "tauri + vue"), ("systemd --user", "daemon service"), ("udev rules", "store paths"), ("evdi", "lcd panels")]
 for i, (label, sub) in enumerate(outs):
     oy = fy + i * 52 - 20
     body += node(580, oy + 12, 240, label, sub, greens[3])
@@ -212,3 +212,33 @@ for i, (label, sub) in enumerate(outs):
 body += arrow(180, fy + 85, 248, fy + 43)
 body += arrow(180, fy + 85, 248, fy + 127)
 (out / "lianli.svg").write_text(card(840, fy + 5 * 52 + 6, "lian-li-linux-nix", body))
+
+
+prs = graphql(
+    f'{{search(query:"author:{user} is:pr -user:{user}",type:ISSUE,first:50){{nodes{{... on PullRequest{{'
+    "title number state merged repository{nameWithOwner stargazerCount description primaryLanguage{name color}}}}}}"
+)["search"]["nodes"]
+byRepo = {}
+for pr in prs:
+    if pr["state"] == "CLOSED" and not pr["merged"]:
+        continue
+    byRepo.setdefault(pr["repository"]["nameWithOwner"], (pr["repository"], []))[1].append(pr)
+stateColors = {"merged": "#a371f7", "open": "#3fb950"}
+body = ""
+y = 60
+for name, (repo, items) in sorted(byRepo.items(), key=lambda kv: -kv[1][0]["stargazerCount"]):
+    lang = repo["primaryLanguage"] or {"name": "", "color": muted}
+    body += f'<rect x="20" y="{y}" width="800" height="{46 + 24 * len(items)}" rx="6" fill="#161b22" stroke="{border}"/>'
+    body += f'<text x="36" y="{y + 26}" font-size="14" font-weight="600" class="mono">{escape(name)}</text>'
+    meta = f'<circle cx="{804 - 150}" cy="{y + 21}" r="5" fill="{lang["color"] or muted}"/>'
+    meta += f'<text x="{804 - 140}" y="{y + 25}" font-size="12" class="m">{escape(lang["name"])}</text>'
+    meta += f'<text x="804" y="{y + 25}" font-size="12" class="m" text-anchor="end">\u2605 {human(repo["stargazerCount"])}</text>'
+    body += meta
+    for i, pr in enumerate(sorted(items, key=lambda p: p["number"])):
+        state = "merged" if pr["merged"] else "open"
+        py = y + 50 + 24 * i
+        body += f'<circle cx="41" cy="{py - 4}" r="4" fill="{stateColors[state]}"/>'
+        body += f'<text x="54" y="{py}" font-size="12"><tspan class="m">#{pr["number"]}</tspan> {escape(pr["title"])}</text>'
+        body += f'<text x="804" y="{py}" font-size="12" text-anchor="end" fill="{stateColors[state]}" style="fill:{stateColors[state]}">{state}</text>'
+    y += 46 + 24 * len(items) + 12
+(out / "contributed.svg").write_text(card(840, y + 8, "contributed to", body))
