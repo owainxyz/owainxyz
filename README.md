@@ -22,15 +22,19 @@ Python/Nix builder. NixOS daily driver.
 
 ## stats
 
-<img src="https://stats.gentoo.lol/overview.svg" alt="github stats" width="100%">
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/overview.svg"><img src="https://stats.gentoo.lol/overview.svg" alt="github stats" width="100%"></picture>
 
-<img src="https://stats.gentoo.lol/contributions.svg" alt="contributions" width="100%">
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/streak.svg"><img src="https://stats.gentoo.lol/streak.svg" alt="streak" width="100%"></picture>
 
-<img src="https://stats.gentoo.lol/languages.svg" alt="languages" width="100%">
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/contributions.svg"><img src="https://stats.gentoo.lol/contributions.svg" alt="contributions" width="100%"></picture>
+
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/languages.svg"><img src="https://stats.gentoo.lol/languages.svg" alt="languages" width="100%"></picture>
+
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/recent.svg"><img src="https://stats.gentoo.lol/recent.svg" alt="recent" width="100%"></picture>
 
 ## contributed to
 
-<a href="https://github.com/search?q=author%3Aowainxyz+is%3Apr+-user%3Aowainxyz&type=pullrequests"><img src="https://stats.gentoo.lol/contributed.svg" alt="contributed to" width="100%"></a>
+<a href="https://github.com/search?q=author%3Aowainxyz+is%3Apr+-user%3Aowainxyz&type=pullrequests"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/contributed.svg"><img src="https://stats.gentoo.lol/contributed.svg" alt="contributed to" width="100%"></picture></a>
 
 ## projects
 
@@ -38,7 +42,7 @@ Python/Nix builder. NixOS daily driver.
 
 Discord in your terminal: voice and video calls, inline images and screen sharing.
 
-<a href="https://github.com/owainxyz/uncord"><img src="https://stats.gentoo.lol/uncord.svg" alt="uncord stats" width="100%"></a>
+<a href="https://github.com/owainxyz/uncord"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/uncord.svg"><img src="https://stats.gentoo.lol/uncord.svg" alt="uncord stats" width="100%"></picture></a>
 
 ### [lian-li-linux-nix](https://github.com/owainxyz/lian-li-linux-nix)
 
@@ -48,7 +52,7 @@ NixOS packaging for [lian-li-linux](https://github.com/sgtaziz/lian-li-linux): f
 nix profile add github:sgtaziz/lian-li-linux
 ```
 
-<a href="https://github.com/owainxyz/lian-li-linux-nix"><img src="https://stats.gentoo.lol/lianli.svg" alt="lian-li-linux-nix" width="100%"></a>
+<a href="https://github.com/owainxyz/lian-li-linux-nix"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/lianli.svg"><img src="https://stats.gentoo.lol/lianli.svg" alt="lian-li-linux-nix" width="100%"></picture></a>
 
 ### configs
 

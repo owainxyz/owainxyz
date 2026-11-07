@@ -21,6 +21,7 @@ def rebuild():
     except Exception as e:
         print("build failed:", e, flush=True)
         return False
+    svgs.update({"light/" + k: gen.light(v) for k, v in list(svgs.items())})
     cache["svgs"] = svgs
     cache["tags"] = {k: '"' + hashlib.sha1(v.encode()).hexdigest()[:16] + '"' for k, v in svgs.items()}
     cache["at"] = time.time()
@@ -60,19 +61,20 @@ def watcher():
         time.sleep(poll)
 
 
-order = ["overview", "contributions", "languages", "contributed", "uncord", "lianli"]
+order = ["overview", "streak", "contributions", "languages", "recent", "contributed", "uncord", "lianli"]
 page = {
     "/": (
         ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
          '<meta name="viewport" content="width=device-width,initial-scale=1">'
          '<title>stats</title><link rel="stylesheet" href="/s.css"></head><body>'
-         + "".join(f'<img src="/{n}.svg" alt="{n}">' for n in order)
+         + "".join(f'<picture><source media="(prefers-color-scheme: light)" srcset="/light/{n}.svg"><img src="/{n}.svg" alt="{n}"></picture>' for n in order)
          + "</body></html>").encode(),
         "text/html; charset=utf-8",
     ),
     "/s.css": (
         b"body{margin:0 auto;padding:16px;max-width:840px;background:#181a1b}"
-        b"img{display:block;width:100%;margin:0 0 16px}",
+        b"img{display:block;width:100%;margin:0 0 16px}"
+        b"@media (prefers-color-scheme: light){body{background:#fff}}",
         "text/css; charset=utf-8",
     ),
 }
@@ -92,7 +94,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
         name = path.strip("/").removesuffix(".svg")
-        svg = cache["svgs"].get(name) if name.isidentifier() else None
+        svg = cache["svgs"].get(name) if name.removeprefix("light/").isidentifier() else None
         if svg is None:
             self.send_response(404)
             self.send_header("Content-Length", "0")

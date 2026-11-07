@@ -105,17 +105,34 @@ def langBar(sizes, x, y, width, legendCols=4):
     return s, 30 + ((len(ordered) - 1) // legendCols) * 22
 
 
+lightMap = {
+    "#0d1117": "#ffffff", "#30363d": "#d0d7de", "#e6edf3": "#1f2328", "#8b949e": "#59636e",
+    "#161b22": "#f0f2f5", "#21262d": "#eaeef2", "#0e4429": "#9be9a8", "#006d32": "#40c463",
+    "#26a641": "#30a14e", "#39d353": "#216e39",
+}
+
+
+def light(svg):
+    for d, l in lightMap.items():
+        svg = svg.replace(d, l)
+    return svg
+
+
 def build():
     svgs = {}
     data = graphql(
         f'{{user(login:"{user}"){{followers{{totalCount}} contributionsCollection{{totalCommitContributions '
         "totalPullRequestContributions contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}} "
         "repositories(first:100,ownerAffiliations:OWNER,privacy:PUBLIC){totalCount nodes{name stargazerCount "
-        "languages(first:10){edges{size node{name}}}}}}}"
+        "isFork languages(first:20){edges{size node{name color}}}}}}}"
     )["user"]
     contrib = data["contributionsCollection"]
     calendar = contrib["contributionCalendar"]
     repos = {r["name"]: r for r in data["repositories"]["nodes"]}
+    for r in repos.values():
+        for e in r["languages"]["edges"]:
+            if e["node"]["color"]:
+                langColors.setdefault(e["node"]["name"], e["node"]["color"])
     stars = sum(r["stargazerCount"] for r in repos.values())
 
     overview = tiles(
@@ -162,6 +179,8 @@ def build():
 
     allLangs = Counter()
     for r in repos.values():
+        if r["isFork"]:
+            continue
         for e in r["languages"]["edges"]:
             allLangs[e["node"]["name"]] += e["size"]
     bar, extra = langBar(allLangs, 20, 52, 800, 4)
@@ -175,9 +194,9 @@ def build():
     u = repos["uncord"]
     uTraffic = traffic("uncord", "clones")
     uViews = traffic("uncord", "views")
-    releases = len(paged(f"repos/{user}/uncord/releases"))
+    rels = paged(f"repos/{user}/uncord/releases")
     body = tiles(
-        [("commits", len(dates)), ("stars", u["stargazerCount"]), ("releases", releases),
+        [("commits", len(dates)), ("stars", u["stargazerCount"]), ("latest", rels[0]["tag_name"] if rels else "-"),
          ("clones, 14d", uTraffic["count"]), ("views, 14d", uViews["count"])],
         20, 52, 800,
     )
@@ -266,6 +285,82 @@ def build():
             body += f'<text x="804" y="{py}" font-size="12" text-anchor="end" fill="{stateColors[state]}" style="fill:{stateColors[state]}">{state}</text>'
         y += 46 + 24 * len(items) + 12
     svgs["contributed"] = (card(840, y + 8, "contributed to", body))
+    allDays = [(date.fromisoformat(d["date"]), d["contributionCount"]) for w in weeks for d in w["contributionDays"]]
+    allDays = [x for x in allDays if x[0] <= date.today()]
+    run = longest = 0
+    longestEnd = None
+    for day, n in allDays:
+        run = run + 1 if n else 0
+        if run > longest:
+            longest, longestEnd = run, day
+    current = 0
+    for day, n in reversed(allDays):
+        if n:
+            current += 1
+        elif day != date.today():
+            break
+    active = sum(1 for _, n in allDays if n)
+    best = max(allDays, key=lambda x: x[1])
+    body = tiles(
+        [("current streak", f"{current}d"), ("longest streak", f"{longest}d"), ("active days", active), ("best day", best[1])],
+        20, 52, 800,
+    )
+    body += f'<text x="20" y="140" font-size="12" class="m">longest ended {longestEnd.strftime("%d %b %Y") if longestEnd else "-"} \u00b7 best day {best[0].strftime("%d %b %Y")}</text>'
+    weekdayTotals = [0] * 7
+    for day, n in allDays:
+        weekdayTotals[day.weekday()] += n
+    wPeak = max(weekdayTotals) or 1
+    for i, label in enumerate(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]):
+        bx = 20 + i * 115
+        h = 70 * weekdayTotals[i] / wPeak
+        body += f'<rect x="{bx}" y="{240 - h:.1f}" width="105" height="{max(h, 1):.1f}" rx="3" fill="{greens[3]}"/>'
+        body += f'<text x="{bx + 52}" y="{260}" font-size="11" class="m" text-anchor="middle">{label}</text>'
+        body += f'<text x="{bx + 52}" y="{234 - h:.1f}" font-size="11" text-anchor="middle">{weekdayTotals[i]}</text>'
+    svgs["streak"] = card(840, 280, "streak", body)
+
+    events = gh(f"users/{user}/events/public?per_page=40")[0]
+    lines = []
+    for ev in events:
+        repo = ev["repo"]["name"]
+        p = ev["payload"]
+        when = ev["created_at"][:10]
+        if ev["type"] == "PushEvent":
+            msg = ""
+            if p.get("commits"):
+                msg = p["commits"][-1]["message"]
+            elif p.get("head"):
+                try:
+                    msg = gh(f"repos/{repo}/commits/{p['head']}")[0]["commit"]["message"]
+                except urllib.error.HTTPError:
+                    pass
+            lines.append(("push", repo, msg.split("\n")[0], when))
+        elif ev["type"] == "PullRequestEvent" and p.get("action") in ("opened", "closed"):
+            pr = p["pull_request"]
+            if "title" not in pr:
+                try:
+                    pr = gh(pr["url"].removeprefix("https://api.github.com/"))[0]
+                except urllib.error.HTTPError:
+                    continue
+            act = "merged" if pr.get("merged") else p["action"]
+            lines.append((act, repo, f'#{pr["number"]} {pr["title"]}', when))
+        elif ev["type"] == "ReleaseEvent":
+            if any(k == "release" and r == repo for k, r, _, _ in lines):
+                continue
+            lines.append(("release", repo, p["release"]["tag_name"], when))
+        elif ev["type"] == "CreateEvent" and p.get("ref_type") == "repository":
+            lines.append(("new repo", repo, "", when))
+        if len(lines) >= 8:
+            break
+    kindColors = {"push": greens[3], "merged": "#a371f7", "opened": "#3fb950", "closed": "#f85149", "release": accent, "new repo": accent}
+    body = ""
+    for i, (kind, repo, text, when) in enumerate(lines[:8]):
+        ly = 62 + i * 26
+        body += f'<circle cx="26" cy="{ly - 4}" r="4" fill="{kindColors.get(kind, muted)}"/>'
+        short = text if len(text) <= 58 else text[:57] + "\u2026"
+        body += f'<text x="38" y="{ly}" font-size="12"><tspan class="mono">{escape(repo.split("/")[1])}</tspan> <tspan class="m">{escape(kind)}</tspan> {escape(short)}</text>'
+        body += f'<text x="820" y="{ly}" font-size="11" class="m" text-anchor="end">{date.fromisoformat(when).strftime("%d %b")}</text>'
+    svgs["recent"] = card(840, 62 + len(lines[:8]) * 26 + 8, "recent", body)
+
     return svgs
 
 
