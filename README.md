@@ -56,5 +56,5 @@ nix profile add github:sgtaziz/lian-li-linux
 | --- | --- |
 | [waybar-config](https://github.com/owainxyz/waybar-config) | two plain dark grey bars for hyprland, sway, niri, river and dwl |
 | [fastfetch-config](https://github.com/owainxyz/fastfetch-config) | custom fastfetch theme |
-| [collection-of-wallpapers](https://github.com/owainxyz/collection-of-wallpapers) | wallpapers |
+| [collection-of-wallpapers](https://github.com/owainxyz/collection-of-wallpapers) | 79 wallpapers: gradients, photography, flowers, with previews |
 
