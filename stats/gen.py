@@ -135,18 +135,6 @@ def build():
                 langColors.setdefault(e["node"]["name"], e["node"]["color"])
     stars = sum(r["stargazerCount"] for r in repos.values())
 
-    overview = tiles(
-        [
-            ("contributions", human(calendar["totalContributions"])),
-            ("commits", human(contrib["totalCommitContributions"])),
-            ("pull requests", contrib["totalPullRequestContributions"]),
-            ("public repos", data["repositories"]["totalCount"]),
-            ("stars", stars),
-            ("followers", data["followers"]["totalCount"]),
-        ],
-        20, 52, 800,
-    )
-    svgs["overview"] = (card(840, 136, "github stats", overview))
 
     weeks = calendar["weeks"]
     cell, gap = 11, 3
@@ -183,8 +171,7 @@ def build():
             continue
         for e in r["languages"]["edges"]:
             allLangs[e["node"]["name"]] += e["size"]
-    bar, extra = langBar(allLangs, 20, 52, 800, 4)
-    svgs["languages"] = (card(840, 52 + extra + 30, "languages", bar))
+    langsBody, langsExtra = langBar(allLangs, 20, 52, 380, 2)
 
     dates = [c["commit"]["author"]["date"] for c in paged(f"repos/{user}/uncord/commits")]
     perDay = Counter(d[:10] for d in dates)
@@ -227,34 +214,7 @@ def build():
         20, 52, 800,
     )
 
-
-    def node(x, y, w, label, sub, color):
-        return (
-            f'<rect x="{x}" y="{y}" width="{w}" height="46" rx="6" fill="#161b22" stroke="{color}"/>'
-            f'<text x="{x + 12}" y="{y + 20}" font-size="13" font-weight="600" class="mono">{escape(label)}</text>'
-            f'<text x="{x + 12}" y="{y + 37}" font-size="11" class="m">{escape(sub)}</text>'
-        )
-
-
-    def arrow(x1, y1, x2, y2):
-        return f'<path d="M{x1} {y1} C{(x1 + x2) / 2} {y1} {(x1 + x2) / 2} {y2} {x2} {y2}" fill="none" stroke="{border}" stroke-width="1.5" marker-end="url(#a)"/>'
-
-
-    fy = 160
-    body += f'<defs><marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="{muted}"/></marker></defs>'
-    body += f'<text x="20" y="{fy - 20}" font-size="12" class="m">what the flake builds</text>'
-    body += node(20, fy + 62, 160, "flake.nix", "nix profile add", accent)
-    body += node(250, fy + 20, 240, "lian-li-linux/", "buildRustPackage + rpath", langColors["Nix"])
-    body += node(250, fy + 104, 240, "module.nix", "nixos module", langColors["Nix"])
-    outs = [("lianli-daemon", "fans, rgb, lcd"), ("lianli-gui", "tauri + vue"), ("systemd --user", "daemon service"), ("udev rules", "store paths"), ("evdi", "lcd panels")]
-    for i, (label, sub) in enumerate(outs):
-        oy = fy + i * 52 - 20
-        body += node(580, oy + 12, 240, label, sub, greens[3])
-        src = (490, fy + 43) if i < 2 else (490, fy + 127)
-        body += arrow(*src, 578, oy + 35)
-    body += arrow(180, fy + 85, 248, fy + 43)
-    body += arrow(180, fy + 85, 248, fy + 127)
-    svgs["lianli"] = (card(840, fy + 5 * 52 + 6, "lian-li-linux-nix", body))
+    svgs["lianli"] = (card(840, 136, "lian-li-linux-nix", body))
 
 
     prs = graphql(
@@ -299,24 +259,17 @@ def build():
             current += 1
         elif day != date.today():
             break
-    active = sum(1 for _, n in allDays if n)
-    best = max(allDays, key=lambda x: x[1])
-    body = tiles(
-        [("current streak", f"{current}d"), ("longest streak", f"{longest}d"), ("active days", active), ("best day", best[1])],
+    svgs["overview"] = card(840, 136, "github stats", tiles(
+        [
+            ("contributions", human(calendar["totalContributions"])),
+            ("current streak", f"{current}d"),
+            ("longest streak", f"{longest}d"),
+            ("pull requests", contrib["totalPullRequestContributions"]),
+            ("stars", stars),
+            ("followers", data["followers"]["totalCount"]),
+        ],
         20, 52, 800,
-    )
-    body += f'<text x="20" y="140" font-size="12" class="m">longest ended {longestEnd.strftime("%d %b %Y") if longestEnd else "-"} \u00b7 best day {best[0].strftime("%d %b %Y")}</text>'
-    weekdayTotals = [0] * 7
-    for day, n in allDays:
-        weekdayTotals[day.weekday()] += n
-    wPeak = max(weekdayTotals) or 1
-    for i, label in enumerate(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]):
-        bx = 20 + i * 115
-        h = 70 * weekdayTotals[i] / wPeak
-        body += f'<rect x="{bx}" y="{240 - h:.1f}" width="105" height="{max(h, 1):.1f}" rx="3" fill="{greens[3]}"/>'
-        body += f'<text x="{bx + 52}" y="{260}" font-size="11" class="m" text-anchor="middle">{label}</text>'
-        body += f'<text x="{bx + 52}" y="{234 - h:.1f}" font-size="11" text-anchor="middle">{weekdayTotals[i]}</text>'
-    svgs["streak"] = card(840, 280, "streak", body)
+    ))
 
     events = gh(f"users/{user}/events/public?per_page=40")[0]
     lines = []
@@ -349,18 +302,20 @@ def build():
             lines.append(("release", repo, p["release"]["tag_name"], when))
         elif ev["type"] == "CreateEvent" and p.get("ref_type") == "repository":
             lines.append(("new repo", repo, "", when))
-        if len(lines) >= 8:
+        if len(lines) >= 5:
             break
     kindColors = {"push": greens[3], "merged": "#a371f7", "opened": "#3fb950", "closed": "#f85149", "release": accent, "new repo": accent}
     body = ""
-    for i, (kind, repo, text, when) in enumerate(lines[:8]):
-        ly = 62 + i * 26
+    for i, (kind, repo, text, when) in enumerate(lines[:5]):
+        ly = 62 + i * 42
         body += f'<circle cx="26" cy="{ly - 4}" r="4" fill="{kindColors.get(kind, muted)}"/>'
-        short = text if len(text) <= 58 else text[:57] + "\u2026"
-        body += f'<text x="38" y="{ly}" font-size="12"><tspan class="mono">{escape(repo.split("/")[1])}</tspan> <tspan class="m">{escape(kind)}</tspan> {escape(short)}</text>'
-        body += f'<text x="820" y="{ly}" font-size="11" class="m" text-anchor="end">{date.fromisoformat(when).strftime("%d %b")}</text>'
-    svgs["recent"] = card(840, 62 + len(lines[:8]) * 26 + 8, "recent", body)
-
+        body += f'<text x="38" y="{ly}" font-size="12"><tspan class="mono">{escape(repo.split("/")[1])}</tspan> <tspan class="m">{escape(kind)}</tspan></text>'
+        body += f'<text x="400" y="{ly}" font-size="11" class="m" text-anchor="end">{date.fromisoformat(when).strftime("%d %b")}</text>'
+        short = text if len(text) <= 52 else text[:51] + "\u2026"
+        body += f'<text x="38" y="{ly + 17}" font-size="12" class="m">{escape(short)}</text>'
+    height = max(62 + len(lines[:5]) * 42 - 8, 52 + langsExtra + 30)
+    svgs["recent"] = card(420, height, "recent", body)
+    svgs["languages"] = card(420, height, "languages", langsBody)
     return svgs
 
 

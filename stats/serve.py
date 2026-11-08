@@ -61,7 +61,7 @@ def watcher():
         time.sleep(poll)
 
 
-order = ["overview", "streak", "contributions", "languages", "recent", "contributed", "uncord", "lianli"]
+order = ["overview", "contributions", "languages", "recent", "contributed", "uncord", "lianli"]
 page = {
     "/": (
         ('<!doctype html><html lang="en"><head><meta charset="utf-8">'

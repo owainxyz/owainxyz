@@ -3,9 +3,9 @@
 </p>
 
 <p align="center">
-  <a href="https://gentoo.lol"><img src="https://img.shields.io/badge/gentoo.lol-0d1117?style=for-the-badge&logo=gentoo&logoColor=e6edf3&labelColor=0d1117" alt="gentoo.lol"></a>
-  <a href="https://huhfloppuh.com"><img src="https://img.shields.io/badge/huhfloppuh.com-0d1117?style=for-the-badge&logo=googlechrome&logoColor=e6edf3&labelColor=0d1117" alt="huhfloppuh.com"></a>
-  <a href="https://owainxyz.github.io/infopage/"><img src="https://img.shields.io/badge/infopage-0d1117?style=for-the-badge&logo=githubpages&logoColor=e6edf3&labelColor=0d1117" alt="infopage"></a>
+  <a href="https://gentoo.lol"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/gentoo.lol-f0f2f5?style=for-the-badge&logo=gentoo&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/gentoo.lol-0d1117?style=for-the-badge&logo=gentoo&logoColor=e6edf3&labelColor=0d1117" alt="gentoo.lol"></picture></a>
+  <a href="https://huhfloppuh.com"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/huhfloppuh.com-f0f2f5?style=for-the-badge&logo=googlechrome&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/huhfloppuh.com-0d1117?style=for-the-badge&logo=googlechrome&logoColor=e6edf3&labelColor=0d1117" alt="huhfloppuh.com"></picture></a>
+  <a href="https://owainxyz.github.io/infopage/"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/infopage-f0f2f5?style=for-the-badge&logo=githubpages&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/infopage-0d1117?style=for-the-badge&logo=githubpages&logoColor=e6edf3&labelColor=0d1117" alt="infopage"></picture></a>
 </p>
 
 ## about
@@ -13,24 +13,21 @@
 Python/Nix builder. NixOS daily driver.
 
 <p>
-  <img src="https://img.shields.io/badge/nix-161b22?style=flat-square&logo=nixos&logoColor=7e7eff" alt="Nix">
-  <img src="https://img.shields.io/badge/python-161b22?style=flat-square&logo=python&logoColor=3572A5" alt="Python">
-  <img src="https://img.shields.io/badge/shell-161b22?style=flat-square&logo=gnubash&logoColor=89e051" alt="Shell">
-  <img src="https://img.shields.io/badge/c++-161b22?style=flat-square&logo=cplusplus&logoColor=f34b7d" alt="C++">
-  <img src="https://img.shields.io/badge/nixos-161b22?style=flat-square&logo=nixos&logoColor=e6edf3" alt="NixOS">
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/nix-f0f2f5?style=flat-square&logo=nixos&logoColor=7e7eff"><img src="https://img.shields.io/badge/nix-161b22?style=flat-square&logo=nixos&logoColor=7e7eff" alt="Nix"></picture>
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/python-f0f2f5?style=flat-square&logo=python&logoColor=3572A5"><img src="https://img.shields.io/badge/python-161b22?style=flat-square&logo=python&logoColor=3572A5" alt="Python"></picture>
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/shell-f0f2f5?style=flat-square&logo=gnubash&logoColor=89e051"><img src="https://img.shields.io/badge/shell-161b22?style=flat-square&logo=gnubash&logoColor=89e051" alt="Shell"></picture>
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/c++-f0f2f5?style=flat-square&logo=cplusplus&logoColor=f34b7d"><img src="https://img.shields.io/badge/c++-161b22?style=flat-square&logo=cplusplus&logoColor=f34b7d" alt="C++"></picture>
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/nixos-f0f2f5?style=flat-square&logo=nixos&logoColor=1f2328"><img src="https://img.shields.io/badge/nixos-161b22?style=flat-square&logo=nixos&logoColor=e6edf3" alt="NixOS"></picture>
 </p>
 
 ## stats
 
 <picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/overview.svg"><img src="https://stats.gentoo.lol/overview.svg" alt="github stats" width="100%"></picture>
 
-<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/streak.svg"><img src="https://stats.gentoo.lol/streak.svg" alt="streak" width="100%"></picture>
-
 <picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/contributions.svg"><img src="https://stats.gentoo.lol/contributions.svg" alt="contributions" width="100%"></picture>
 
-<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/languages.svg"><img src="https://stats.gentoo.lol/languages.svg" alt="languages" width="100%"></picture>
-
-<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/recent.svg"><img src="https://stats.gentoo.lol/recent.svg" alt="recent" width="100%"></picture>
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/languages.svg"><img src="https://stats.gentoo.lol/languages.svg" alt="languages" width="49.5%"></picture>
+<picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/recent.svg"><img src="https://stats.gentoo.lol/recent.svg" alt="recent" width="49.5%"></picture>
 
 ## contributed to
 
