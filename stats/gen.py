@@ -207,14 +207,6 @@ def build():
     body += bar
     svgs["uncord"] = (card(840, chartY + chartH + 42 + extra + 26, "uncord", body))
 
-    ll = repos["lian-li-linux-nix"]
-    llTraffic = traffic("lian-li-linux-nix", "clones")
-    body = tiles(
-        [("stars", ll["stargazerCount"]), ("clones, 14d", llTraffic["count"]), ("nix", f'{sum(e["size"] for e in ll["languages"]["edges"]) / 1000:.1f} kB')],
-        20, 52, 800,
-    )
-
-    svgs["lianli"] = (card(840, 136, "lian-li-linux-nix", body))
 
 
     prs = graphql(

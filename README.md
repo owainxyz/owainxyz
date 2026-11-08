@@ -41,16 +41,6 @@ Discord in your terminal: voice and video calls, inline images and screen sharin
 
 <a href="https://github.com/owainxyz/uncord"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/uncord.svg"><img src="https://stats.gentoo.lol/uncord.svg" alt="uncord stats" width="100%"></picture></a>
 
-### [lian-li-linux-nix](https://github.com/owainxyz/lian-li-linux-nix)
-
-NixOS packaging for [lian-li-linux](https://github.com/sgtaziz/lian-li-linux): fans, RGB and LCD control for Lian Li hardware. Merged upstream in 1.2.5.
-
-```sh
-nix profile add github:sgtaziz/lian-li-linux
-```
-
-<a href="https://github.com/owainxyz/lian-li-linux-nix"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/lianli.svg"><img src="https://stats.gentoo.lol/lianli.svg" alt="lian-li-linux-nix" width="100%"></picture></a>
-
 ### configs
 
 | repo | |
