@@ -173,39 +173,44 @@ def build():
             allLangs[e["node"]["name"]] += e["size"]
     langsBody, langsExtra = langBar(allLangs, 20, 52, 380, 2)
 
-    dates = [c["commit"]["author"]["date"] for c in paged(f"repos/{user}/uncord/commits")]
-    perDay = Counter(d[:10] for d in dates)
-    first = date.fromisoformat(min(perDay))
-    last = date.today()
-    days = [first + timedelta(i) for i in range((last - first).days + 1)]
-    u = repos["uncord"]
-    uTraffic = traffic("uncord", "clones")
-    uViews = traffic("uncord", "views")
-    rels = paged(f"repos/{user}/uncord/releases")
-    body = tiles(
-        [("commits", len(dates)), ("stars", u["stargazerCount"]), ("latest", rels[0]["tag_name"] if rels else "-"),
-         ("clones, 14d", uTraffic["count"]), ("views, 14d", uViews["count"])],
-        20, 52, 800,
-    )
-    chartX, chartY, chartW, chartH = 48, 150, 772, 110
-    peak = max(perDay.values())
-    step = chartW / len(days)
-    body += f'<text x="20" y="{chartY - 12}" font-size="12" class="m">commits per day</text>'
-    for t in (0, peak // 2, peak):
-        ty = chartY + chartH - chartH * t / peak
-        body += f'<line x1="{chartX}" x2="{chartX + chartW}" y1="{ty:.1f}" y2="{ty:.1f}" stroke="#21262d"/>'
-        body += f'<text x="{chartX - 8}" y="{ty + 4:.1f}" font-size="11" class="m" text-anchor="end">{t}</text>'
-    for i, d in enumerate(days):
-        n = perDay.get(d.isoformat(), 0)
-        if n:
-            h = chartH * n / peak
-            body += f'<rect x="{chartX + i * step + 1.5:.1f}" y="{chartY + chartH - h:.1f}" width="{max(step - 3, 2):.1f}" height="{h:.1f}" rx="2" fill="{greens[3]}"><title>{d}: {n}</title></rect>'
-        if i % 7 == 0:
-            body += f'<text x="{chartX + i * step + step / 2:.1f}" y="{chartY + chartH + 16}" font-size="11" class="m" text-anchor="middle">{d.strftime("%d %b")}</text>'
-    uLangs = {e["node"]["name"]: e["size"] for e in u["languages"]["edges"]}
-    bar, extra = langBar(uLangs, 20, chartY + chartH + 42, 800, 5)
-    body += bar
-    svgs["uncord"] = (card(840, chartY + chartH + 42 + extra + 26, "uncord", body))
+    def repoCard(name):
+        dates = [c["commit"]["author"]["date"] for c in paged(f"repos/{user}/{name}/commits")]
+        perDay = Counter(d[:10] for d in dates)
+        first = date.fromisoformat(min(perDay))
+        last = date.today()
+        days = [first + timedelta(i) for i in range((last - first).days + 1)]
+        u = repos[name]
+        uTraffic = traffic(name, "clones")
+        uViews = traffic(name, "views")
+        rels = paged(f"repos/{user}/{name}/releases")
+        body = tiles(
+            [("commits", len(dates)), ("stars", u["stargazerCount"]), ("latest", rels[0]["tag_name"] if rels else "-"),
+             ("clones, 14d", uTraffic["count"]), ("views, 14d", uViews["count"])],
+            20, 52, 800,
+        )
+        chartX, chartY, chartW, chartH = 48, 150, 772, 110
+        peak = max(perDay.values())
+        step = chartW / max(len(days), 30)
+        body += f'<text x="20" y="{chartY - 12}" font-size="12" class="m">commits per day</text>'
+        for t in (0, peak // 2, peak):
+            ty = chartY + chartH - chartH * t / peak
+            body += f'<line x1="{chartX}" x2="{chartX + chartW}" y1="{ty:.1f}" y2="{ty:.1f}" stroke="#21262d"/>'
+            body += f'<text x="{chartX - 8}" y="{ty + 4:.1f}" font-size="11" class="m" text-anchor="end">{t}</text>'
+        for i, d in enumerate(days):
+            n = perDay.get(d.isoformat(), 0)
+            if n:
+                h = chartH * n / peak
+                body += f'<rect x="{chartX + i * step + 1.5:.1f}" y="{chartY + chartH - h:.1f}" width="{max(step - 3, 2):.1f}" height="{h:.1f}" rx="2" fill="{greens[3]}"><title>{d}: {n}</title></rect>'
+            if i % 7 == 0 or len(days) < 7:
+                body += f'<text x="{chartX + i * step + step / 2:.1f}" y="{chartY + chartH + 16}" font-size="11" class="m" text-anchor="middle">{d.strftime("%d %b")}</text>'
+        uLangs = {e["node"]["name"]: e["size"] for e in u["languages"]["edges"]}
+        bar, extra = langBar(uLangs, 20, chartY + chartH + 42, 800, 5)
+        body += bar
+        return card(840, chartY + chartH + 42 + extra + 26, name, body)
+
+    for name in ("uncord", "shortleash"):
+        if name in repos:
+            svgs[name] = repoCard(name)
 
 
 
