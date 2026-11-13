@@ -41,11 +41,6 @@ Discord in your terminal: voice and video calls, inline images and screen sharin
 
 <a href="https://github.com/owainxyz/uncord"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/uncord.svg"><img src="https://stats.gentoo.lol/uncord.svg" alt="uncord stats" width="100%"></picture></a>
 
-### [shortleash](https://github.com/owainxyz/shortleash)
-
-Timed, logged root for AI agents: you open a window, the agent runs commands through it, it shuts itself.
-
-<a href="https://github.com/owainxyz/shortleash"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/shortleash.svg"><img src="https://stats.gentoo.lol/shortleash.svg" alt="shortleash stats" width="100%"></picture></a>
 
 ### configs
 
