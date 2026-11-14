@@ -208,7 +208,7 @@ def build():
         body += bar
         return card(840, chartY + chartH + 42 + extra + 26, name, body)
 
-    for name in ("uncord", "shortleash"):
+    for name in ("uncord", "shortleash", "splashdeck"):
         if name in repos:
             svgs[name] = repoCard(name)
 

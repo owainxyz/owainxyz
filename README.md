@@ -41,6 +41,12 @@ Discord in your terminal: voice and video calls, inline images and screen sharin
 
 <a href="https://github.com/owainxyz/uncord"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/uncord.svg"><img src="https://stats.gentoo.lol/uncord.svg" alt="uncord stats" width="100%"></picture></a>
 
+### [splashdeck](https://github.com/owainxyz/splashdeck)
+
+Splash screen and display control for the fifine AmpliGame D6 on Linux, worked out by capturing the Windows app's USB traffic.
+
+<a href="https://github.com/owainxyz/splashdeck"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/splashdeck.svg"><img src="https://stats.gentoo.lol/splashdeck.svg" alt="splashdeck stats" width="100%"></picture></a>
+
 
 ### configs
 
