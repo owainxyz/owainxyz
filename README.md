@@ -24,6 +24,10 @@ Python/Nix builder. NixOS daily driver.
   <picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/nixos-f0f2f5?style=flat-square&logo=nixos&logoColor=1f2328"><img src="https://img.shields.io/badge/nixos-161b22?style=flat-square&logo=nixos&logoColor=e6edf3" alt="NixOS"></picture>
 </p>
 
+## contact
+
+<a href="https://gentoo.lol/contact"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/contact.svg"><img src="https://stats.gentoo.lol/contact.svg" alt="contact@gentoo.lol" width="100%"></picture></a>
+
 ## stats
 
 <picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/overview.svg"><img src="https://stats.gentoo.lol/overview.svg" alt="github stats" width="100%"></picture>
