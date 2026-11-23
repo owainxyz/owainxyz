@@ -51,12 +51,6 @@ Splash screen and display control for the fifine AmpliGame D6 on Linux, worked o
 
 <a href="https://github.com/owainxyz/splashdeck"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/splashdeck.svg"><img src="https://stats.gentoo.lol/splashdeck.svg" alt="splashdeck stats" width="100%"></picture></a>
 
-### [wtop](https://github.com/owainxyz/wtop)
-
-htop for Windows. One exe that runs in cmd, PowerShell and Windows Terminal, no admin needed.
-
-<a href="https://github.com/owainxyz/wtop"><picture><source media="(prefers-color-scheme: light)" srcset="https://stats.gentoo.lol/light/wtop.svg"><img src="https://stats.gentoo.lol/wtop.svg" alt="wtop stats" width="100%"></picture></a>
-
 ### [claude-desktop-linux](https://github.com/owainxyz/claude-desktop-linux)
 
 The Windows Claude Desktop app, verified against its signed release and rebuilt to run natively on Linux.
