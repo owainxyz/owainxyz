@@ -3,10 +3,13 @@
 </p>
 
 <p align="center">
+  <a href="mailto:contact@gentoo.lol">contact@gentoo.lol</a> · <a href="https://gentoo.lol/contact">gentoo.lol/contact</a>
+</p>
+
+<p align="center">
   <a href="https://gentoo.lol"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/gentoo.lol-f0f2f5?style=for-the-badge&logo=gentoo&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/gentoo.lol-0d1117?style=for-the-badge&logo=gentoo&logoColor=e6edf3&labelColor=0d1117" alt="gentoo.lol"></picture></a>
   <a href="https://huhfloppuh.com"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/huhfloppuh.com-f0f2f5?style=for-the-badge&logo=googlechrome&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/huhfloppuh.com-0d1117?style=for-the-badge&logo=googlechrome&logoColor=e6edf3&labelColor=0d1117" alt="huhfloppuh.com"></picture></a>
   <a href="https://owainxyz.github.io/infopage/"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/infopage-f0f2f5?style=for-the-badge&logo=githubpages&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/infopage-0d1117?style=for-the-badge&logo=githubpages&logoColor=e6edf3&labelColor=0d1117" alt="infopage"></picture></a>
-  <a href="mailto:contact@gentoo.lol"><picture><source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/contact@gentoo.lol-f0f2f5?style=for-the-badge&logo=maildotru&logoColor=1f2328&labelColor=f0f2f5"><img src="https://img.shields.io/badge/contact@gentoo.lol-0d1117?style=for-the-badge&logo=maildotru&logoColor=e6edf3&labelColor=0d1117" alt="contact@gentoo.lol"></picture></a>
 </p>
 
 ## about
